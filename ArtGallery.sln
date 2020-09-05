@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtGalleryAPI", "ArtGalleryAPI\ArtGalleryAPI.csproj", "{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D39704E7-94A0-49DC-BA69-1244AB29FB21}
+	EndGlobalSection
+EndGlobal
