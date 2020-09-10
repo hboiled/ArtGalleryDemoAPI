@@ -20,8 +20,8 @@ namespace ArtGalleryAPI.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("IdentityContextConnection")));
 
-                services.AddDefaultIdentity<ArtGalleryAPIUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<IdentityContext>();
+                //services.AddDefaultIdentity<ArtGalleryAPIUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                //    .AddEntityFrameworkStores<IdentityContext>();
             });
         }
     }
