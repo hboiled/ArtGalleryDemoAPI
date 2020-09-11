@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtGalleryAPI.Controllers
-{
-    [Authorize]
+{    
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
-    {
+    {        
+        [Authorize]
         [HttpGet]
         public List<string> GetValues()
         {

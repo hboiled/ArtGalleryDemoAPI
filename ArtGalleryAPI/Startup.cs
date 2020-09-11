@@ -64,10 +64,11 @@ namespace ArtGalleryAPI
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidAudience = Configuration["JWT:ValidAudience"],
-                        ValidIssuer = Configuration["JWT:ValidIssuer"],
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        //ValidAudience = Configuration["JWT:ValidAudience"],
+                        //ValidIssuer = Configuration["JWT:ValidIssuer"],
                         IssuerSigningKey = new SymmetricSecurityKey((Encoding.UTF8.GetBytes("secretKeyTempDoNotUseInProductionPlease")))
                     };
                 });
