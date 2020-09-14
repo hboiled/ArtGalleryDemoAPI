@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtGalleryAPI.Data;
 using ArtGalleryAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtGalleryAPI.Controllers
 {
@@ -77,6 +78,7 @@ namespace ArtGalleryAPI.Controllers
         // POST: api/ArtWorks
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ArtWork>> PostArtWork(ArtWork artWork)
         {
@@ -87,6 +89,7 @@ namespace ArtGalleryAPI.Controllers
         }
 
         // DELETE: api/ArtWorks/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<ArtWork>> DeleteArtWork(int id)
         {

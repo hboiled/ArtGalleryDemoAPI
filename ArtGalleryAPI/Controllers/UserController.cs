@@ -38,6 +38,7 @@ namespace ArtGalleryAPI.Controllers
             var user = await userManager.FindByNameAsync(model.CuratorId);
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
             {
+                // TODO: Find way to add roles to user
                 var userRoles = await userManager.GetRolesAsync(user);
 
                 var authClaims = new List<Claim>
@@ -54,17 +55,29 @@ namespace ArtGalleryAPI.Controllers
                 // configure
                 var authSigningKey = new SymmetricSecurityKey((Encoding.UTF8.GetBytes("secretKeyTempDoNotUseInProductionPlease")));
 
-                var token = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
+                //var token = new JwtSecurityToken(
+                //    //issuer: _configuration["JWT:ValidIssuer"],
+                //    //audience: _configuration["JWT:ValidAudience"],
+                //    expires: DateTime.UtcNow.AddDays(7),                    
+                //    claims: authClaims,
+                //    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)                   
+                //    );
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(authClaims),
+                    Expires = DateTime.UtcNow.AddDays(2),
+                    SigningCredentials = new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
 
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    //token = new JwtSecurityTokenHandler().WriteToken(token),
+                    token = tokenString,
+                    curatorId = user.UserName,
                     expiration = token.ValidTo
                 });
             }
