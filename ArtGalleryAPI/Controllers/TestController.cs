@@ -61,5 +61,17 @@ namespace ArtGalleryAPI.Controllers
             data.RemoveWork(workId);
             return NoContent();
         }
+
+        [HttpGet("search/{query}")]
+        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksStartingWith(string query)
+        {
+            return data.SearchTitleStartsWith(query);
+        }
+
+        [HttpGet("filter/{year}")]
+        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksByYear(int year)
+        {
+            return data.FilterWorksByYear(year);
+        }
     }
 }

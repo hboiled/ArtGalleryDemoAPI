@@ -67,5 +67,46 @@ namespace ArtGalleryDataLibrary.DataAccess
             string sql = "delete from artworks where Id = @Id";
             db.SaveData(sql, new { Id = workId}, connectionString);
         }
+
+        // search operations
+        public List<ArtWork> SearchTitleStartsWith(string query)
+        {
+            string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
+                "ImgPath from artworks where Title like @StartsWith";
+
+            return db.LoadData<ArtWork, dynamic>(sql, new { StartsWith = query + "%" }, connectionString);
+        }
+
+        public List<ArtWork> FilterWorksByYear(int year)
+        {
+            string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
+                "ImgPath from artworks where Year = @Year";
+
+            return db.LoadData<ArtWork, dynamic>(sql, new { Year = year }, connectionString);
+        }
+
+        public List<ArtWork> FilterWorksByCountry(string country)
+        {
+            string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
+                "ImgPath from artworks where Country = @Country";
+
+            return db.LoadData<ArtWork, dynamic>(sql, new { Country = country }, connectionString);
+        }
+
+        public List<ArtWork> FilterWorksByArtist(string artist)
+        {
+            string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
+                "ImgPath from artworks where Artist = @Artist";
+
+            return db.LoadData<ArtWork, dynamic>(sql, new { Artist = artist }, connectionString);
+        }
+
+        public List<ArtWork> FilterWorksByGenre(string genre)
+        {
+            string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
+                "ImgPath from artworks where Genre = @Genre";
+
+            return db.LoadData<ArtWork, dynamic>(sql, new { Genre = genre }, connectionString);
+        }
     }
 }

@@ -10,5 +10,9 @@ namespace ArtGalleryDataLibrary.DataAccess
         void CreateContact(ArtWork work);
         void UpdateWork(ArtWork work);
         void RemoveWork(int workId);
+
+        // search operations, extract to another interface>
+        List<ArtWork> SearchTitleStartsWith(string query);
+        List<ArtWork> FilterWorksByYear(int year);
     }
 }
