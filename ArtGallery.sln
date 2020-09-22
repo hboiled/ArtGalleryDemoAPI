@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtGalleryAPI", "ArtGalleryAPI\ArtGalleryAPI.csproj", "{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtGalleryDataLibrary", "ArtGalleryDataLibrary\ArtGalleryDataLibrary.csproj", "{CC8D7288-4E0E-4CA8-A539-4A631A568799}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDEFDDEF-7A89-4166-9FAF-8A17018E2A41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC8D7288-4E0E-4CA8-A539-4A631A568799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC8D7288-4E0E-4CA8-A539-4A631A568799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC8D7288-4E0E-4CA8-A539-4A631A568799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC8D7288-4E0E-4CA8-A539-4A631A568799}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArtGalleryAPI.Models;
+using ArtGalleryDataLibrary.DataAccess;
+using ArtGalleryDataLibrary.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,17 +14,52 @@ namespace ArtGalleryAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
-    {        
-        [Authorize]
-        [HttpGet]
-        public List<string> GetValues()
-        {
-            List<string> vals = new List<string>();
-            vals.Add("abc");
-            vals.Add("123");
-            vals.Add("zzz");
+    {
+        private readonly IGalleryData data;
 
-            return vals;
+        public TestController(IGalleryData data)
+        {
+            this.data = data;
+        }
+        
+        [HttpGet]
+        public List<ArtGalleryDataLibrary.Models.ArtWork> GetTestData()
+        {
+            // TODO map types
+            return data.GetAllWorks();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ArtGalleryDataLibrary.Models.ArtWork>> GetArtWork(int id)
+        {
+            return data.GetWorkById(id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ArtGalleryDataLibrary.Models.ArtWork>> PostArtWork(ArtGalleryDataLibrary.Models.ArtWork artWork)
+        {
+            data.CreateContact(artWork);
+
+            return CreatedAtAction("GetArtWork", new { id = artWork.Id }, artWork);
+        }
+
+        [HttpPut("{workId}")]
+        public async Task<IActionResult> UpdateArtWork(int workId, ArtGalleryDataLibrary.Models.ArtWork artWork)
+        {
+            if (workId != artWork.Id)
+            {
+                return BadRequest();
+            }
+
+            data.UpdateWork(artWork);
+            return NoContent();
+        }
+
+        [HttpDelete("{workId}")]
+        public async Task<IActionResult> DeleteArtWork(int workId)
+        {
+            data.RemoveWork(workId);
+            return NoContent();
         }
     }
 }

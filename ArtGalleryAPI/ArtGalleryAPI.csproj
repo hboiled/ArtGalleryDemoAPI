@@ -26,5 +26,9 @@
     <Folder Include="Authentication\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ArtGalleryDataLibrary\ArtGalleryDataLibrary.csproj" />
+  </ItemGroup>
+
 
 </Project>

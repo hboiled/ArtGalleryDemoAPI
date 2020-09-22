@@ -38,7 +38,6 @@ namespace ArtGalleryAPI.Controllers
             var user = await userManager.FindByNameAsync(model.CuratorId);
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
             {
-                // TODO: Find way to add roles to user
                 var userRoles = await userManager.GetRolesAsync(user);
 
                 var authClaims = new List<Claim>

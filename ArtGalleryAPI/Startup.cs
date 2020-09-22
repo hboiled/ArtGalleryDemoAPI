@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ArtGalleryDataLibrary.DataAccess;
+using System.IO;
 
 namespace ArtGalleryAPI
 {
@@ -48,6 +50,14 @@ namespace ArtGalleryAPI
             services.AddDbContext<IdentityContext>(options => 
                     options.UseSqlServer(Configuration.GetConnectionString("IdentityContextConnection")));
 
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+            var config = builder.Build();
+            string conStr = config.GetConnectionString("GalleryLite");
+
+            services.AddScoped<IGalleryData>(x => new ArtGalleryData(conStr));
+
             services.AddIdentity<ArtGalleryAPIUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
@@ -66,9 +76,7 @@ namespace ArtGalleryAPI
                     {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = false,
-                        ValidateAudience = false,
-                        //ValidAudience = Configuration["JWT:ValidAudience"],
-                        //ValidIssuer = Configuration["JWT:ValidIssuer"],
+                        ValidateAudience = false,                        
                         IssuerSigningKey = new SymmetricSecurityKey((Encoding.UTF8.GetBytes("secretKeyTempDoNotUseInProductionPlease")))
                     };
                 });
