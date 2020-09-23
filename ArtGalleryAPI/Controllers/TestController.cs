@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ArtGalleryAPI.Models;
@@ -68,10 +69,53 @@ namespace ArtGalleryAPI.Controllers
             return data.SearchTitleStartsWith(query);
         }
 
-        [HttpGet("filter/{year}")]
+        [Authorize(Roles = "Curator")]
+        [HttpGet("year/{year}")]
         public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksByYear(int year)
         {
             return data.FilterWorksByYear(year);
+        }
+
+        [HttpGet("artist/{artist}")]
+        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksByArtist(string artist)
+        {
+            return data.FilterWorksByArtist(artist);
+        }
+
+        [HttpGet("genre/{genre}")]
+        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksByGenre(string genre)
+        {
+            return data.FilterWorksByGenre(genre);
+        }
+
+        [HttpGet("country/{country}")]
+        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksByCountry(string country)
+        {
+            return data.FilterWorksByCountry(country);
+        }
+
+        [HttpGet("country")]
+        public List<string> GetAllCountries()
+        {
+            return data.CountriesAvailable();
+        }
+
+        [HttpGet("genre")]
+        public List<string> GetAllGenres()
+        {
+            return data.GenresAvailable();
+        }
+
+        [HttpGet("artist")]
+        public List<string> GetAllArtists()
+        {
+            return data.ArtistsAvailable();
+        }
+
+        [HttpGet("year")]
+        public List<int> GetAllYears()
+        {
+            return data.YearsAvailable();
         }
     }
 }

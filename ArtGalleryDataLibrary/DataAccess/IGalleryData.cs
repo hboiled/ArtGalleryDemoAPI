@@ -14,5 +14,15 @@ namespace ArtGalleryDataLibrary.DataAccess
         // search operations, extract to another interface>
         List<ArtWork> SearchTitleStartsWith(string query);
         List<ArtWork> FilterWorksByYear(int year);
+        List<ArtWork> FilterWorksByArtist(string artist);
+        List<ArtWork> FilterWorksByGenre(string genre);
+        List<ArtWork> FilterWorksByCountry(string country);
+
+        // for filter display options
+
+        List<string> ArtistsAvailable();
+        List<int> YearsAvailable();
+        List<string> GenresAvailable();
+        List<string> CountriesAvailable();
     }
 }

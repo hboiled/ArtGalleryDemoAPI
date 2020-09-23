@@ -108,5 +108,32 @@ namespace ArtGalleryDataLibrary.DataAccess
 
             return db.LoadData<ArtWork, dynamic>(sql, new { Genre = genre }, connectionString);
         }
+
+        // lists of filter categories
+
+        public List<string> ArtistsAvailable()
+        {
+            string sql = "select Artist from artworks";
+
+            return db.LoadData<string, dynamic>(sql, null, connectionString);
+        }
+        public List<int> YearsAvailable()
+        {
+            string sql = "select Year from artworks";
+
+            return db.LoadData<int, dynamic>(sql, null, connectionString);
+        }
+        public List<string> GenresAvailable()
+        {
+            string sql = "select Genre from artworks";
+
+            return db.LoadData<string, dynamic>(sql, null, connectionString);
+        }
+        public List<string> CountriesAvailable()
+        {
+            string sql = "select Country from artworks";
+
+            return db.LoadData<string, dynamic>(sql, null, connectionString);
+        }
     }
 }

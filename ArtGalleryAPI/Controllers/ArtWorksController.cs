@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ArtGalleryAPI.Data;
 using ArtGalleryAPI.Models;
 using Microsoft.AspNetCore.Authorization;
+using ArtGalleryDataLibrary.DataAccess;
 
 namespace ArtGalleryAPI.Controllers
 {
@@ -16,10 +17,12 @@ namespace ArtGalleryAPI.Controllers
     public class ArtWorksController : ControllerBase
     {
         private readonly GalleryContext _context;
+        private readonly IGalleryData data;
 
-        public ArtWorksController(GalleryContext context)
+        public ArtWorksController(GalleryContext context, IGalleryData data)
         {
             _context = context;
+            this.data = data;
         }
 
         // GET: api/ArtWorks
@@ -103,6 +106,18 @@ namespace ArtGalleryAPI.Controllers
             await _context.SaveChangesAsync();
 
             return artWork;
+        }
+
+        [HttpGet("search/{query}")]
+        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksStartingWith(string query)
+        {
+            return data.SearchTitleStartsWith(query);
+        }
+
+        [HttpGet("year/{year}")]
+        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksByYear(int year)
+        {
+            return data.FilterWorksByYear(year);
         }
 
         private bool ArtWorkExists(int id)
