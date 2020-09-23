@@ -77,18 +77,9 @@ namespace ArtGalleryAPI.Controllers
         // DELETE: api/ArtWorks/5
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ArtWork>> DeleteArtWork(int id)
+        public void DeleteArtWork(int id)
         {
-            var artWork = await _context.ArtWork.FindAsync(id);
-            if (artWork == null)
-            {
-                return NotFound();
-            }
-
-            _context.ArtWork.Remove(artWork);
-            await _context.SaveChangesAsync();
-
-            return artWork;
+            data.RemoveWork(id);
         }
 
         [HttpGet("search/{query}")]
@@ -143,11 +134,6 @@ namespace ArtGalleryAPI.Controllers
         public List<int> GetAllYears()
         {
             return data.YearsAvailable();
-        }
-
-        private bool ArtWorkExists(int id)
-        {
-            return _context.ArtWork.Any(e => e.Id == id);
-        }
+        }        
     }
 }

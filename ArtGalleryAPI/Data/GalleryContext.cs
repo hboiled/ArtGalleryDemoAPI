@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ArtGalleryAPI.Models;
+//using ArtGalleryAPI.Models;
 
 namespace ArtGalleryAPI.Data
 {
@@ -14,6 +14,6 @@ namespace ArtGalleryAPI.Data
         {
         }
 
-        public DbSet<ArtGalleryAPI.Models.ArtWork> ArtWork { get; set; }
+        //public DbSet<ArtGalleryAPI.Models.ArtWork> ArtWork { get; set; }
     }
 }
