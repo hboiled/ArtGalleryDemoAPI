@@ -113,25 +113,25 @@ namespace ArtGalleryDataLibrary.DataAccess
 
         public List<string> ArtistsAvailable()
         {
-            string sql = "select Artist from artworks";
+            string sql = "select distinct Artist from artworks";
 
             return db.LoadData<string, dynamic>(sql, null, connectionString);
         }
         public List<int> YearsAvailable()
         {
-            string sql = "select Year from artworks";
+            string sql = "select distinct Year from artworks";
 
             return db.LoadData<int, dynamic>(sql, null, connectionString);
         }
         public List<string> GenresAvailable()
         {
-            string sql = "select Genre from artworks";
+            string sql = "select distinct Genre from artworks";
 
             return db.LoadData<string, dynamic>(sql, null, connectionString);
         }
         public List<string> CountriesAvailable()
         {
-            string sql = "select Country from artworks";
+            string sql = "select distinct Country from artworks";
 
             return db.LoadData<string, dynamic>(sql, null, connectionString);
         }

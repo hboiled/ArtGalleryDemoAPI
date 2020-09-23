@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using ArtGalleryAPI.Models;
 using ArtGalleryDataLibrary.DataAccess;
 using ArtGalleryDataLibrary.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -94,28 +93,5 @@ namespace ArtGalleryAPI.Controllers
             return data.FilterWorksByCountry(country);
         }
 
-        [HttpGet("country")]
-        public List<string> GetAllCountries()
-        {
-            return data.CountriesAvailable();
-        }
-
-        [HttpGet("genre")]
-        public List<string> GetAllGenres()
-        {
-            return data.GenresAvailable();
-        }
-
-        [HttpGet("artist")]
-        public List<string> GetAllArtists()
-        {
-            return data.ArtistsAvailable();
-        }
-
-        [HttpGet("year")]
-        public List<int> GetAllYears()
-        {
-            return data.YearsAvailable();
-        }
     }
 }

@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtGalleryAPI.Data;
-using ArtGalleryAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using ArtGalleryDataLibrary.DataAccess;
+using ArtGalleryDataLibrary.Models;
 
 namespace ArtGalleryAPI.Controllers
 {
@@ -29,14 +29,14 @@ namespace ArtGalleryAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArtWork>>> GetArtWork()
         {
-            return await _context.ArtWork.ToListAsync();
+            return data.GetAllWorks();
         }
 
         // GET: api/ArtWorks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ArtWork>> GetArtWork(int id)
         {
-            var artWork = await _context.ArtWork.FindAsync(id);
+            var artWork = data.GetWorkById(id);
 
             if (artWork == null)
             {
@@ -57,23 +57,7 @@ namespace ArtGalleryAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(artWork).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ArtWorkExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            data.UpdateWork(artWork);
 
             return NoContent();
         }
@@ -85,8 +69,7 @@ namespace ArtGalleryAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ArtWork>> PostArtWork(ArtWork artWork)
         {
-            _context.ArtWork.Add(artWork);
-            await _context.SaveChangesAsync();
+            data.CreateContact(artWork);
 
             return CreatedAtAction("GetArtWork", new { id = artWork.Id }, artWork);
         }
@@ -109,15 +92,57 @@ namespace ArtGalleryAPI.Controllers
         }
 
         [HttpGet("search/{query}")]
-        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksStartingWith(string query)
+        public List<ArtWork> GetWorksStartingWith(string query)
         {
             return data.SearchTitleStartsWith(query);
         }
 
         [HttpGet("year/{year}")]
-        public List<ArtGalleryDataLibrary.Models.ArtWork> GetWorksByYear(int year)
+        public List<ArtWork> GetWorksByYear(int year)
         {
             return data.FilterWorksByYear(year);
+        }
+
+        [HttpGet("artist/{artist}")]
+        public List<ArtWork> GetWorksByArtist(string artist)
+        {
+            return data.FilterWorksByArtist(artist);
+        }
+
+        [HttpGet("genre/{genre}")]
+        public List<ArtWork> GetWorksByYear(string genre)
+        {
+            return data.FilterWorksByGenre(genre);
+        }
+
+        [HttpGet("country/{country}")]
+        public List<ArtWork> GetWorksByCountry(string country)
+        {
+            return data.FilterWorksByCountry(country);
+        }
+
+        [HttpGet("country")]
+        public List<string> GetAllCountries()
+        {
+            return data.CountriesAvailable();
+        }
+
+        [HttpGet("genre")]
+        public List<string> GetAllGenres()
+        {
+            return data.GenresAvailable();
+        }
+
+        [HttpGet("artist")]
+        public List<string> GetAllArtists()
+        {
+            return data.ArtistsAvailable();
+        }
+
+        [HttpGet("year")]
+        public List<int> GetAllYears()
+        {
+            return data.YearsAvailable();
         }
 
         private bool ArtWorkExists(int id)
