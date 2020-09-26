@@ -100,7 +100,7 @@ namespace ArtGalleryAPI.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.CuratorId
             };
-
+            
             var userCreated = await userManager.CreateAsync(user, model.Password);
             var addedRole = await roleManager.CreateAsync(new IdentityRole(UserRoles.Curator));
 

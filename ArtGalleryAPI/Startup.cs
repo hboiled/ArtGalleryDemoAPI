@@ -44,11 +44,11 @@ namespace ArtGalleryAPI
                     .AllowAnyHeader());
             });
 
-            services.AddDbContext<GalleryContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("GalleryContext")));
+            //services.AddDbContext<GalleryContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("GalleryContext")));
 
-            services.AddDbContext<IdentityContext>(options => 
-                    options.UseSqlServer(Configuration.GetConnectionString("IdentityContextConnection")));
+            services.AddDbContext<IdentityContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("ArtGalleryIdentity")));
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

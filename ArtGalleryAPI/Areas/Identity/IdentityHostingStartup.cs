@@ -17,8 +17,8 @@ namespace ArtGalleryAPI.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<IdentityContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("IdentityContextConnection")));
+                    options.UseSqlite(
+                        context.Configuration.GetConnectionString("ArtGalleryIdentity")));
 
                 //services.AddDefaultIdentity<ArtGalleryAPIUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 //    .AddEntityFrameworkStores<IdentityContext>();
