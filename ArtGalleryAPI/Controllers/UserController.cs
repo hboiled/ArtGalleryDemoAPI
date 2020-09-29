@@ -102,7 +102,8 @@ namespace ArtGalleryAPI.Controllers
             };
             
             var userCreated = await userManager.CreateAsync(user, model.Password);
-            var addedRole = await roleManager.CreateAsync(new IdentityRole(UserRoles.Curator));
+            var addToRole = await userManager.AddToRoleAsync(user, "Curator");
+            //var addedRole = await roleManager.CreateAsync(new IdentityRole(UserRoles.Curator));
 
             if (!userCreated.Succeeded)
             {

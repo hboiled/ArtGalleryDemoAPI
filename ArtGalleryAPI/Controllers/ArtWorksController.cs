@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ArtGalleryAPI.Data;
 using Microsoft.AspNetCore.Authorization;
 using ArtGalleryDataLibrary.DataAccess;
 using ArtGalleryDataLibrary.Models;
@@ -27,7 +22,14 @@ namespace ArtGalleryAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArtWork>>> GetArtWork()
         {
-            return data.GetAllWorks();
+            var works = data.GetAllWorks();
+
+            if (works.Count <= 0)
+            {
+                return NoContent();
+            }
+
+            return works;
         }
 
         // GET: api/ArtWorks/5
@@ -38,7 +40,7 @@ namespace ArtGalleryAPI.Controllers
 
             if (artWork == null)
             {
-                return NotFound();
+                return NotFound("Work does not exist");
             }
 
             return artWork;
@@ -53,7 +55,7 @@ namespace ArtGalleryAPI.Controllers
         {
             if (id != artWork.Id)
             {
-                return BadRequest();
+                return BadRequest("Id sent did not match that of the work");
             }
 
             data.UpdateWork(artWork);
@@ -64,7 +66,7 @@ namespace ArtGalleryAPI.Controllers
         // POST: api/ArtWorks
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
+        [Authorize(Roles = "Curator")]
         [HttpPost]
         public async Task<ActionResult<ArtWork>> PostArtWork(ArtWork artWork)
         {
@@ -74,11 +76,20 @@ namespace ArtGalleryAPI.Controllers
         }
 
         // DELETE: api/ArtWorks/5
-        [Authorize]
+        [Authorize(Roles = "Curator")]
         [HttpDelete("{id}")]
-        public void DeleteArtWork(int id)
+        public ActionResult DeleteArtWork(int id)
         {
+            var work = data.GetWorkById(id);
+
+            if (work == null)
+            {
+                return BadRequest("Work does not exist");
+            }
+
             data.RemoveWork(id);
+
+            return NoContent();
         }
 
             
