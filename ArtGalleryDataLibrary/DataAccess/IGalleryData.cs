@@ -7,16 +7,16 @@ namespace ArtGalleryDataLibrary.DataAccess
     {
         List<T> GetAllWorks();
         T GetWorkById(int id);
-        void CreateWork(ArtWork work);
-        void UpdateWork(ArtWork work);
+        void CreateWork(T work);
+        void UpdateWork(T work);
         void RemoveWork(int workId);
 
         // search operations, extract to another interface>
-        List<ArtWork> SearchTitleStartsWith(string query);
-        List<ArtWork> FilterWorksByYear(int year);
-        List<ArtWork> FilterWorksByArtist(string artist);
-        List<ArtWork> FilterWorksByGenre(string genre);
-        List<ArtWork> FilterWorksByCountry(string country);
+        List<T> SearchTitleStartsWith(string query);
+        List<T> FilterWorksByYear(int year);
+        List<T> FilterWorksByArtist(string artist);
+        List<T> FilterWorksByGenre(string genre);
+        List<T> FilterWorksByCountry(string country);
 
         // for filter display options
 

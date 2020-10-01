@@ -1,27 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using ArtGalleryDataLibrary.DataAccess;
 using ArtGalleryDataLibrary.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ArtGalleryAPI.Controllers
 {
-    // RENAME TO PAINTING CONTROLLER
     [Route("api/[controller]")]
     [ApiController]
-    public class ArtWorksController : ControllerBase
+    public class SculptureController : ControllerBase
     {
-        private readonly IGalleryData<Painting> data;
+        private readonly IGalleryData<Sculpture> data;
 
-        public ArtWorksController(IGalleryData<Painting> data)
+        public SculptureController(IGalleryData<Sculpture> data)
         {
             this.data = data;
         }
 
         // GET: api/ArtWorks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Painting>>> GetArtWork()
+        public async Task<ActionResult<IEnumerable<Sculpture>>> GetSculptures()
         {
             var works = data.GetAllWorks();
 
@@ -35,7 +36,7 @@ namespace ArtGalleryAPI.Controllers
 
         // GET: api/ArtWorks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Painting>> GetArtWork(int id)
+        public async Task<ActionResult<Sculpture>> GetSculptureById(int id)
         {
             var artWork = data.GetWorkById(id);
 
@@ -47,12 +48,10 @@ namespace ArtGalleryAPI.Controllers
             return artWork;
         }
 
-        // PUT: api/ArtWorks/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // PUT: api/ArtWorks/5        
         //[Authorize(Roles = "Curator")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArtWork(int id, Painting artWork)
+        public async Task<IActionResult> PutArtWork(int id, Sculpture artWork)
         {
             if (id != artWork.Id)
             {
@@ -69,7 +68,7 @@ namespace ArtGalleryAPI.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         //[Authorize(Roles = "Curator")]
         [HttpPost]
-        public async Task<ActionResult<Painting>> PostArtWork(Painting artWork)
+        public async Task<ActionResult<Sculpture>> PostArtWork(Sculpture artWork)
         {
             data.CreateWork(artWork);
 
@@ -92,7 +91,5 @@ namespace ArtGalleryAPI.Controllers
 
             return NoContent();
         }
-
-            
     }
 }

@@ -21,31 +21,31 @@ namespace ArtGalleryAPI.Controllers
         }
 
         [HttpGet("search/{query}")]
-        public List<ArtWork> GetWorksStartingWith(string query)
+        public List<Painting> GetWorksStartingWith(string query)
         {
             return data.SearchTitleStartsWith(query);
         }
 
         [HttpGet("year/{year}")]
-        public List<ArtWork> GetWorksByYear(int year)
+        public List<Painting> GetWorksByYear(int year)
         {
             return data.FilterWorksByYear(year);
         }
 
         [HttpGet("artist/{artist}")]
-        public List<ArtWork> GetWorksByArtist(string artist)
+        public List<Painting> GetWorksByArtist(string artist)
         {
             return data.FilterWorksByArtist(artist);
         }
 
         [HttpGet("genre/{genre}")]
-        public List<ArtWork> GetWorksByYear(string genre)
+        public List<Painting> GetWorksByYear(string genre)
         {
             return data.FilterWorksByGenre(genre);
         }
 
         [HttpGet("country/{country}")]
-        public List<ArtWork> GetWorksByCountry(string country)
+        public List<Painting> GetWorksByCountry(string country)
         {
             return data.FilterWorksByCountry(country);
         }

@@ -12,16 +12,31 @@ namespace ArtGalleryDataLibrary.DataAccess
     {
         readonly string connectionString;
         private SqliteDataAccess db = new SqliteDataAccess();
+        private string table;
 
         public ArtGalleryData(IOptions<ConnectionStringOptions> options)
         {
             ConnectionStringOptions conStrOptions = options.Value;
             this.connectionString = conStrOptions.GalleryLite;
+            setTargetTable();
+        }
+
+        private void setTargetTable()
+        {
+            switch (typeof(T).Name)
+            {
+                case "Sculpture":
+                    table = "sculptures";
+                    break;
+                case "Painting":
+                    table = "paintings";
+                    break;
+            }
         }
 
         public List<T> GetAllWorks()
         {
-            string sql = "select Id, Title, Artist, Year, Genre, Review, Country, ImgPath from paintings";
+            string sql = $"select Id, Title, Artist, Year, Genre, Review, Country, ImgPath from { table }";
 
             return db.LoadData<T, dynamic>(sql, new { }, connectionString);
         }
@@ -37,7 +52,7 @@ namespace ArtGalleryDataLibrary.DataAccess
             return output;
         }
 
-        public void CreateWork(ArtWork work)
+        public void CreateWork(T work)
         {
             // save basic contact
             string sql = "insert into paintings (Title, Artist, Year, Genre, Review, Country, ImgPath) " +
@@ -58,7 +73,7 @@ namespace ArtGalleryDataLibrary.DataAccess
 
         }
 
-        public void UpdateWork(ArtWork work)
+        public void UpdateWork(T work)
         {
             string sql = "update paintings set Title = @Title, Artist = @Artist, Year = @Year, Genre = @Genre, " +
                 "Review = @Review, Country = @Country, ImgPath = @ImgPath where Id = @Id";
@@ -72,44 +87,44 @@ namespace ArtGalleryDataLibrary.DataAccess
         }
 
         // search operations
-        public List<ArtWork> SearchTitleStartsWith(string query)
+        public List<T> SearchTitleStartsWith(string query)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
                 "ImgPath from paintings where Title like @StartsWith";
 
-            return db.LoadData<ArtWork, dynamic>(sql, new { StartsWith = query + "%" }, connectionString);
+            return db.LoadData<T, dynamic>(sql, new { StartsWith = query + "%" }, connectionString);
         }
 
-        public List<ArtWork> FilterWorksByYear(int year)
+        public List<T> FilterWorksByYear(int year)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
                 "ImgPath from paintings where Year = @Year";
 
-            return db.LoadData<ArtWork, dynamic>(sql, new { Year = year }, connectionString);
+            return db.LoadData<T, dynamic>(sql, new { Year = year }, connectionString);
         }
 
-        public List<ArtWork> FilterWorksByCountry(string country)
+        public List<T> FilterWorksByCountry(string country)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
                 "ImgPath from paintings where Country = @Country";
 
-            return db.LoadData<ArtWork, dynamic>(sql, new { Country = country }, connectionString);
+            return db.LoadData<T, dynamic>(sql, new { Country = country }, connectionString);
         }
 
-        public List<ArtWork> FilterWorksByArtist(string artist)
+        public List<T> FilterWorksByArtist(string artist)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
                 "ImgPath from paintings where Artist = @Artist";
 
-            return db.LoadData<ArtWork, dynamic>(sql, new { Artist = artist }, connectionString);
+            return db.LoadData<T, dynamic>(sql, new { Artist = artist }, connectionString);
         }
 
-        public List<ArtWork> FilterWorksByGenre(string genre)
+        public List<T> FilterWorksByGenre(string genre)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
                 "ImgPath from paintings where Genre = @Genre";
 
-            return db.LoadData<ArtWork, dynamic>(sql, new { Genre = genre }, connectionString);
+            return db.LoadData<T, dynamic>(sql, new { Genre = genre }, connectionString);
         }
 
         // lists of filter categories
