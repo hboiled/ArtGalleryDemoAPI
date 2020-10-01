@@ -13,9 +13,9 @@ namespace ArtGalleryAPI.Controllers
     [ApiController]
     public class FilterController : ControllerBase
     {
-        private readonly IGalleryData data;
+        private readonly IGalleryData<Painting> data;
 
-        public FilterController(IGalleryData data)
+        public FilterController(IGalleryData<Painting> data)
         {            
             this.data = data;
         }

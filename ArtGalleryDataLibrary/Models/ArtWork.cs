@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArtGalleryDataLibrary.Models
 {
-    public class ArtWork
+    public abstract class ArtWork : IArtWork
     {
         public int Id { get; set; }
         [Required]

@@ -7,20 +7,21 @@ using ArtGalleryDataLibrary.Models;
 
 namespace ArtGalleryAPI.Controllers
 {
+    // RENAME TO PAINTING CONTROLLER
     [Route("api/[controller]")]
     [ApiController]
     public class ArtWorksController : ControllerBase
     {
-        private readonly IGalleryData data;
+        private readonly IGalleryData<Painting> data;
 
-        public ArtWorksController(IGalleryData data)
+        public ArtWorksController(IGalleryData<Painting> data)
         {
             this.data = data;
         }
 
         // GET: api/ArtWorks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArtWork>>> GetArtWork()
+        public async Task<ActionResult<IEnumerable<Painting>>> GetArtWork()
         {
             var works = data.GetAllWorks();
 
@@ -34,7 +35,7 @@ namespace ArtGalleryAPI.Controllers
 
         // GET: api/ArtWorks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ArtWork>> GetArtWork(int id)
+        public async Task<ActionResult<Painting>> GetArtWork(int id)
         {
             var artWork = data.GetWorkById(id);
 
@@ -70,7 +71,7 @@ namespace ArtGalleryAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ArtWork>> PostArtWork(ArtWork artWork)
         {
-            data.CreateContact(artWork);
+            data.CreateWork(artWork);
 
             return CreatedAtAction("GetArtWork", new { id = artWork.Id }, artWork);
         }

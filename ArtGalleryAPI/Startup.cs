@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ArtGalleryDataLibrary.DataAccess;
 using System.IO;
+using ArtGalleryAPI.Helpers;
 
 namespace ArtGalleryAPI
 {
@@ -50,13 +51,10 @@ namespace ArtGalleryAPI
             services.AddDbContext<IdentityContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("ArtGalleryIdentity")));
 
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
-            var config = builder.Build();
-            string conStr = config.GetConnectionString("GalleryLite");
-
-            services.AddScoped<IGalleryData>(x => new ArtGalleryData(conStr));
+            //services.AddScoped<IGalleryData>(x => new ArtGalleryData(conStr));
+            services.Configure<ConnectionStringOptions>(
+                this.Configuration.GetSection("ConnectionStrings"));
+            services.AddScoped(typeof(IGalleryData<>), typeof(ArtGalleryData<>));            
 
             services.AddIdentity<ArtGalleryAPIUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()

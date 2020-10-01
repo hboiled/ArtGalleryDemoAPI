@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ArtGalleryDataLibrary.DataAccess
 {
-    public interface IGalleryData
+    public interface IGalleryData<T>
     {
-        List<ArtWork> GetAllWorks();
-        ArtWork GetWorkById(int id);
-        void CreateContact(ArtWork work);
+        List<T> GetAllWorks();
+        T GetWorkById(int id);
+        void CreateWork(ArtWork work);
         void UpdateWork(ArtWork work);
         void RemoveWork(int workId);
 
