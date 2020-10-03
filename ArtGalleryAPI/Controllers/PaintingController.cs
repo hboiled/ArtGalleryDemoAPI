@@ -7,14 +7,13 @@ using ArtGalleryDataLibrary.Models;
 
 namespace ArtGalleryAPI.Controllers
 {
-    // RENAME TO PAINTING CONTROLLER
     [Route("api/[controller]")]
     [ApiController]
-    public class ArtWorksController : ControllerBase
+    public class PaintingController : ControllerBase
     {
         private readonly IGalleryData<Painting> data;
 
-        public ArtWorksController(IGalleryData<Painting> data)
+        public PaintingController(IGalleryData<Painting> data)
         {
             this.data = data;
         }

@@ -45,7 +45,7 @@ namespace ArtGalleryDataLibrary.DataAccess
         {
             T output;
 
-            string sql = "select Id, Title, Artist, Year, Genre, Review, Country, ImgPath from paintings where Id = @Id";
+            string sql = $"select Id, Title, Artist, Year, Genre, Review, Country, ImgPath from { table } where Id = @Id";
 
             output = db.LoadData<T, dynamic>(sql, new { Id = id }, connectionString).FirstOrDefault();
 
@@ -55,7 +55,7 @@ namespace ArtGalleryDataLibrary.DataAccess
         public void CreateWork(T work)
         {
             // save basic contact
-            string sql = "insert into paintings (Title, Artist, Year, Genre, Review, Country, ImgPath) " +
+            string sql = $"insert into { table } (Title, Artist, Year, Genre, Review, Country, ImgPath) " +
                 "values (@Title, @Artist, @Year, @Genre, @Review, @Country, @ImgPath);";
 
 
@@ -75,14 +75,14 @@ namespace ArtGalleryDataLibrary.DataAccess
 
         public void UpdateWork(T work)
         {
-            string sql = "update paintings set Title = @Title, Artist = @Artist, Year = @Year, Genre = @Genre, " +
+            string sql = $"update { table } set Title = @Title, Artist = @Artist, Year = @Year, Genre = @Genre, " +
                 "Review = @Review, Country = @Country, ImgPath = @ImgPath where Id = @Id";
             db.SaveData(sql, work, connectionString);
         }
 
         public void RemoveWork(int workId)
         {
-            string sql = "delete from paintings where Id = @Id";
+            string sql = $"delete from { table } where Id = @Id";
             db.SaveData(sql, new { Id = workId}, connectionString);
         }
 
@@ -90,7 +90,7 @@ namespace ArtGalleryDataLibrary.DataAccess
         public List<T> SearchTitleStartsWith(string query)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
-                "ImgPath from paintings where Title like @StartsWith";
+                $"ImgPath from { table } where Title like @StartsWith";
 
             return db.LoadData<T, dynamic>(sql, new { StartsWith = query + "%" }, connectionString);
         }
@@ -98,7 +98,7 @@ namespace ArtGalleryDataLibrary.DataAccess
         public List<T> FilterWorksByYear(int year)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
-                "ImgPath from paintings where Year = @Year";
+                $"ImgPath from { table } where Year = @Year";
 
             return db.LoadData<T, dynamic>(sql, new { Year = year }, connectionString);
         }
@@ -106,7 +106,7 @@ namespace ArtGalleryDataLibrary.DataAccess
         public List<T> FilterWorksByCountry(string country)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
-                "ImgPath from paintings where Country = @Country";
+                $"ImgPath from { table } where Country = @Country";
 
             return db.LoadData<T, dynamic>(sql, new { Country = country }, connectionString);
         }
@@ -114,7 +114,7 @@ namespace ArtGalleryDataLibrary.DataAccess
         public List<T> FilterWorksByArtist(string artist)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
-                "ImgPath from paintings where Artist = @Artist";
+                $"ImgPath from { table } where Artist = @Artist";
 
             return db.LoadData<T, dynamic>(sql, new { Artist = artist }, connectionString);
         }
@@ -122,7 +122,7 @@ namespace ArtGalleryDataLibrary.DataAccess
         public List<T> FilterWorksByGenre(string genre)
         {
             string sql = "select Id, Title, Artist, Year, Genre, Review, Country, " +
-                "ImgPath from paintings where Genre = @Genre";
+                $"ImgPath from { table } where Genre = @Genre";
 
             return db.LoadData<T, dynamic>(sql, new { Genre = genre }, connectionString);
         }
@@ -131,25 +131,25 @@ namespace ArtGalleryDataLibrary.DataAccess
 
         public List<string> ArtistsAvailable()
         {
-            string sql = "select distinct Artist from paintings";
+            string sql = $"select distinct Artist from { table }";
 
             return db.LoadData<string, dynamic>(sql, null, connectionString);
         }
         public List<int> YearsAvailable()
         {
-            string sql = "select distinct Year from paintings";
+            string sql = $"select distinct Year from { table }";
 
             return db.LoadData<int, dynamic>(sql, null, connectionString);
         }
         public List<string> GenresAvailable()
         {
-            string sql = "select distinct Genre from paintings";
+            string sql = $"select distinct Genre from { table }";
 
             return db.LoadData<string, dynamic>(sql, null, connectionString);
         }
         public List<string> CountriesAvailable()
         {
-            string sql = "select distinct Country from paintings";
+            string sql = $"select distinct Country from { table }";
 
             return db.LoadData<string, dynamic>(sql, null, connectionString);
         }
